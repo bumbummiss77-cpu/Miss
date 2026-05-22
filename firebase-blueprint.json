@@ -1,0 +1,131 @@
+{
+  "entities": {
+    "Candidate": {
+      "title": "Candidate",
+      "description": "A beauty pageant candidate profile with stage details, physical attributes, votes, and jury metrics.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier of the candidate" },
+        "fullName": { "type": "string", "description": "Legal government full name" },
+        "stageName": { "type": "string", "description": "Stage moniker or short competitive name" },
+        "birthDate": { "type": "string", "description": "Date of birth in YYYY-MM-DD or DD/MM/YYYY text format" },
+        "age": { "type": "integer", "description": "Calculated current age" },
+        "nationality": { "type": "string", "description": "Country of origin" },
+        "province": { "type": "string", "description": "Representing Mozambican province" },
+        "biography": { "type": "string", "description": "Short public biography" },
+        "story": { "type": "string", "description": "Community project detail or social struggle narrative" },
+        "motivation": { "type": "string", "description": "Main reason or motivation to join" },
+        "category": { "type": "string", "description": "Competitive category" },
+        "height": { "type": "integer", "description": "Candidate height in centimeters" },
+        "weight": { "type": "integer", "description": "Candidate weight in kilograms" },
+        "talents": { "type": "array", "description": "List of specialized performance talents or attributes" },
+        "experience": { "type": "string", "description": "Historical experience in fashion/runway/modeling" },
+        "profilePhoto": { "type": "string", "description": "Close-up portrait of the candidate face" },
+        "bodyPhoto": { "type": "string", "description": "Full-body preview pose photo" },
+        "albumPhotos": { "type": "array", "description": "Additional gallery URLs" },
+        "presentationVideo": { "type": "string" },
+        "walkVideo": { "type": "string" },
+        "talentVideo": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"], "description": "Organization curation status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "ISO timestamp of creation" },
+        "votesCount": { "type": "integer", "description": "Cumulative voter votes" },
+        "viewsCount": { "type": "integer", "description": "Page view metrics" },
+        "juryScore": { "type": "number", "description": "Arithmetic mean from all active evaluations (1.0 - 10.0)" },
+        "active": { "type": "boolean", "description": "Active status of the profile" },
+        "dailyVotesChange": { "type": "integer", "description": "Daily leaderboard change index" }
+      },
+      "required": ["id", "fullName", "stageName", "province", "category", "status", "createdAt"]
+    },
+    "JuryEvaluation": {
+      "title": "JuryEvaluation",
+      "description": "Expert scores across multiple runway performance attributes logged by registered jury members.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "candidateId": { "type": "string" },
+        "juryId": { "type": "string" },
+        "juryName": { "type": "string" },
+        "communication": { "type": "integer" },
+        "presence": { "type": "integer" },
+        "confidence": { "type": "integer" },
+        "runway": { "type": "integer" },
+        "talent": { "type": "integer" },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "candidateId", "juryId", "juryName", "communication", "presence", "confidence", "runway", "talent", "createdAt"]
+    },
+    "VoteTransaction": {
+      "title": "VoteTransaction",
+      "description": "Reconciliation transactions log documenting money collections via local wallets (M-Pesa, e-Mola, m-Kesh) and Visa.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "candidateId": { "type": "string" },
+        "candidateName": { "type": "string" },
+        "voterName": { "type": "string" },
+        "voterEmail": { "type": "string" },
+        "votesQuantity": { "type": "integer" },
+        "paymentMethod": { "type": "string", "enum": ["mpesa", "emola", "mkesh", "visa"] },
+        "phoneNumber": { "type": "string" },
+        "amountMZN": { "type": "integer" },
+        "status": { "type": "string", "enum": ["pending", "completed", "failed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "candidateId", "candidateName", "votesQuantity", "paymentMethod", "amountMZN", "status", "createdAt"]
+    },
+    "SystemSettings": {
+      "title": "SystemSettings",
+      "description": "Platform global variable parameters including stages, weight definitions, and voting prices.",
+      "type": "object",
+      "properties": {
+        "contestEdition": { "type": "string" },
+        "activeStage": { "type": "string", "enum": ["enrollment", "selection", "public_voting", "jury_voting", "grand_final"] },
+        "juryVoteWeight": { "type": "integer" },
+        "publicVoteWeight": { "type": "integer" },
+        "voterDailyLimit": { "type": "integer" },
+        "paidVotePriceMZN": { "type": "integer" },
+        "allowPublicVoting": { "type": "boolean" },
+        "allowJuryVoting": { "type": "boolean" }
+      },
+      "required": ["contestEdition", "activeStage", "juryVoteWeight", "publicVoteWeight", "voterDailyLimit", "paidVotePriceMZN", "allowPublicVoting", "allowJuryVoting"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Trace logs detailing operations performed, changes to settings, enrollment states, etc.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "action": { "type": "string" },
+        "details": { "type": "string" },
+        "ipAddress": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "userName", "action", "details", "ipAddress", "createdAt"]
+    }
+  },
+  "firestore": {
+    "candidates": {
+      "schema": "Candidate",
+      "description": "Collection storing details of all pageants and models."
+    },
+    "evaluations": {
+      "schema": "JuryEvaluation",
+      "description": "Collection of all jury ratings and individual scores."
+    },
+    "transactions": {
+      "schema": "VoteTransaction",
+      "description": "Secure financial and vote registration ledger."
+    },
+    "settings": {
+      "schema": "SystemSettings",
+      "description": "Global regulatory, phase and price settings configuration doc."
+    },
+    "auditLogs": {
+      "schema": "AuditLog",
+      "description": "Audit trails for monitoring and fraud prevention purposes."
+    }
+  }
+}

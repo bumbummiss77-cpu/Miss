@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-tech: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-gold-50: #fbf8eb;
+  --color-gold-100: #f5eed3;
+  --color-gold-200: #eadb9e;
+  --color-gold-300: #dbc161;
+  --color-gold-400: #cca535;
+  --color-gold-500: #b89126;
+  --color-gold-600: #9e751d;
+  --color-gold-700: #7d5918;
+  --color-gold-800: #624416;
+  --color-gold-900: #4e3615;
+  --color-gold-950: #2d1d09;
+
+  --color-carbon-50: #f6f6f7;
+  --color-carbon-100: #e2e3e5;
+  --color-carbon-200: #c4c6ca;
+  --color-carbon-300: #9da0a6;
+  --color-carbon-400: #737880;
+  --color-carbon-500: #585d65;
+  --color-carbon-600: #464a51;
+  --color-carbon-700: #3a3d42;
+  --color-carbon-800: #1a1b1d;
+  --color-carbon-900: #101112;
+  --color-carbon-950: #08090a;
+}
+
+/* Custom premium scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-carbon-950);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-carbon-700);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-500);
+}
+
+/* Custom shimmering loader classes */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.shimmer-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-effect::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.05) 20%,
+    rgba(255, 255, 255, 0.1) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 2s infinite;
+  content: '';
+}
+
+/* Base custom interactive states */
+.gold-glow {
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+}
+
+.gold-glow-hover:hover {
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+}
+
+/* Background gradient animations */
+@keyframes royalGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.royal-gradient-animate {
+  background-size: 200% 200%;
+  animation: royalGradient 15s ease infinite;
+}

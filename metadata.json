@@ -1,0 +1,6 @@
+{
+  "name": "Concurso de Beleza Miss Moçambique",
+  "description": "Plataforma profissional para inscrição de candidatas, votação pública nacional via carteiras móveis (M-Pesa, e-Mola, m-Kesh), avaliação de jurados e painel de controle administrativo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
